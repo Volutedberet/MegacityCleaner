@@ -40,7 +40,7 @@ Material:
     - _ContrastBoost: 1.3
     - _DitherP: 0.004
     - _DitherS: 0.5
-    - _PosterAmount: 12
+    - _PosterAmount: 48
     - _Resolution: 1280
     m_Colors: []
   m_BuildTextureStacks: []
