@@ -1,6 +1,13 @@
 using UnityEngine;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine.UI;
+using TMPro;
+using UnityEngine.Events;
+using UnityEngine.Networking;
+using Unity.Netcode;
 
-public class PlayerController : MonoBehaviour{
+public class PlayerController : NetworkBehaviour{
     public bool canMove;
 
     [Space(10)]
@@ -17,22 +24,20 @@ public class PlayerController : MonoBehaviour{
     private float yaw;
     private float headTiltCurrent = 0.5f;
 
-    public static PlayerController instance;
-    
-    void Awake(){
-        if(instance == null){
-            instance = this;
+    private void Start() {
+        if(!IsOwner){
             return;
         }
-        Destroy(this);
-    }
 
-    private void Start() {
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
     }
 
     private void Update(){
+        if(!IsOwner){
+            return;
+        }
+
         if(canMove){
             yaw += Input.GetAxisRaw("Mouse X") * sensitivity;
             pitch -= Input.GetAxisRaw("Mouse Y") * sensitivity;
