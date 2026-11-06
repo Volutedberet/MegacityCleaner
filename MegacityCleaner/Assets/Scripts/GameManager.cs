@@ -81,6 +81,23 @@ public class GameManager : NetworkBehaviour{
 
     public void UpdateUI(){
         PlayerBase.localPlayer.dayText.text = $"DAY {currentDay}";
+        switch(gameState){
+            case GameState.preDayStart:
+                PlayerBase.localPlayer.dayStateText.text = "Early Morning";
+                break;
+            case GameState.daySelling:
+                PlayerBase.localPlayer.dayStateText.text = "Store Time";
+                break;
+            case GameState.dayDone:
+                PlayerBase.localPlayer.dayStateText.text = "Closing Time";
+                break;
+            case GameState.scrapNight:
+                PlayerBase.localPlayer.dayStateText.text = "Scrap Time";
+                break;
+            case GameState.preSleepNight:
+                PlayerBase.localPlayer.dayStateText.text = "Late Night";
+                break;
+        }
     }
 
     public void UpdateDayLighting(){

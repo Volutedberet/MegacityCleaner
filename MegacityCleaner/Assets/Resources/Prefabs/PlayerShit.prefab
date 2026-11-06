@@ -129,7 +129,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
-  GlobalObjectIdHash: 944328349
+  GlobalObjectIdHash: 2322021227
   InScenePlacedSourceGlobalObjectIdHash: 0
   m_InScenePlacedDisabledByDefault: 0
   DeferredDespawnTick: 0
@@ -163,6 +163,7 @@ MonoBehaviour:
   fog: {fileID: 8822234479189409224}
   inventory: {fileID: 3269661922668122198}
   dayText: {fileID: 2489216203662949965}
+  dayStateText: {fileID: 7148982290573615157}
 --- !u!114 &3269661922668122198
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2772,7 +2773,7 @@ GameObject:
   - component: {fileID: 3762943052571858736}
   - component: {fileID: 7148982290573615157}
   m_Layer: 6
-  m_Name: DayText (1)
+  m_Name: DayState
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -18,6 +18,7 @@ public class PlayerBase : NetworkBehaviour{
     public InventoryManager inventory;
 
     public TextMeshProUGUI dayText;
+    public TextMeshProUGUI dayStateText;
 
     void Start(){
         if(!IsOwner){

@@ -10,4 +10,7 @@ public class ItemData : ScriptableObject {
 
     [HideInInspector]
     public int itemID; 
+
+    public bool canBeSold;
+    public int basePrice;
 }
