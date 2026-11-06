@@ -17,6 +17,8 @@ public class PlayerBase : NetworkBehaviour{
 
     public InventoryManager inventory;
 
+    public TextMeshProUGUI dayText;
+
     void Start(){
         if(!IsOwner){
             uiRenderers.SetActive(false);
