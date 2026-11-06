@@ -13,19 +13,23 @@ public class PlayerBase : NetworkBehaviour{
     public GameObject playerTpsVisuals;
     public GameObject fpsCamera;
     public GameObject uiRenderers;
+    public GameObject fog;
+
+    public InventoryManager inventory;
 
     void Start(){
         if(!IsOwner){
             uiRenderers.SetActive(false);
             fpsCamera.SetActive(false);
             playerTpsVisuals.SetActive(true);
+            fog.SetActive(false);
             return;
         }
-
     
         uiRenderers.SetActive(true);
         fpsCamera.SetActive(true);
         playerTpsVisuals.SetActive(false);
+        fog.SetActive(true);
 
         if(localPlayer == null){
             localPlayer = this;

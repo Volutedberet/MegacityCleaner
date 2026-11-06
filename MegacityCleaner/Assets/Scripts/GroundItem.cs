@@ -1,16 +1,27 @@
 using UnityEngine;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine.UI;
+using TMPro;
+using UnityEngine.Events;
+using UnityEngine.Networking;
+using Unity.Netcode;
 
-public class GroundItem : MonoBehaviour
-{
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
+public class GroundItem : NetworkBehaviour{
+    public ItemData item;
+    NetworkObject no;
+
+    void Start(){
+        no = this.gameObject.GetComponent<NetworkObject>();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+    public void PickMeUp(){
+        PlayerBase.localPlayer.inventory.AddItem(item);
+        RequestDestroyServerRpc();
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+    public void RequestDestroyServerRpc(){
+        no.Despawn(true);
     }
 }

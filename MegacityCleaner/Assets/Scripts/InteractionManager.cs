@@ -17,15 +17,14 @@ public class InteractionManager : MonoBehaviour{
 
     void Update(){
         if(Physics.Raycast(interactPos.position, interactPos.forward, out RaycastHit interactHit, interactionDistance, ~ignore)){
-            if(interactHit.collider.gameObject.TryGetComponent<Interactable>(out Interactable inter)){
-                if(inter != currentHighlighted){
-                    if(currentHighlighted != null){
-                        
-                    }
-
+            if(interactHit.collider.gameObject.TryGetComponent<Interactable>(out Interactable inter)){                    
+                if(currentHighlighted != null){
+                    if(inter != currentHighlighted){
+                        currentHighlighted = inter;
+                    }                        
+                }else{
                     currentHighlighted = inter;
                 }
-
     
                 Vector2 viewportPos = cam.WorldToViewportPoint(inter.transform.position);
                 interactHud.anchoredPosition = new Vector2(1920 * viewportPos.x, 1080 * viewportPos.y);
@@ -35,7 +34,7 @@ public class InteractionManager : MonoBehaviour{
                 
                 interactHud.gameObject.SetActive(true);
 
-                if(Input.GetKeyDown("e")){
+                if(Input.GetKeyDown("f")){
                     currentHighlighted.onInteract.Invoke();
                 }
             }else{
