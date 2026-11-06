@@ -8,9 +8,12 @@ using UnityEngine.Networking;
 using Unity.Netcode;
 
 public class InventoryManager : NetworkBehaviour{
+    public ItemDatabase itemDatabase;
     public List<InventorySlot> slots = new List<InventorySlot>();
-
     public List<HeldItemData> heldItemDatas = new List<HeldItemData>();
+
+    [Space(10)]
+    [SerializeField] Transform dropPos;
 
     int selectedSlot = 0;
 
@@ -18,7 +21,7 @@ public class InventoryManager : NetworkBehaviour{
         if(!IsOwner){
             return;
         }
-
+        itemDatabase.SetupItemIDs();
         UpdateSlots();
     }
 
@@ -63,13 +66,17 @@ public class InventoryManager : NetworkBehaviour{
             selectedSlot = 8;
             UpdateSlots();
         }
+
+        if(Input.GetKeyDown("q")){
+            DropHeld();
+        }
     }
 
     public void UpdateSlots(){        
         foreach(var held in heldItemDatas){
             held.visualFps.SetActive(false);
             held.visualTps.SetActive(false);
-        }
+        }    
 
         int slotID = 0;
         foreach(var slot in slots){
@@ -78,17 +85,32 @@ public class InventoryManager : NetworkBehaviour{
 
             if(slot.item != null){
                 slot.slotDisplay.DisplayItem(slot.item);
-                if(slotID == selectedSlot){
-                    BeginHoldItemServerRpc(slot.item.itemHeldVisualID);                
-                }else{
-                    BeginHoldItemServerRpc(-1);       
-                }
             }else{
                 slot.slotDisplay.DisplayNoItem();
             }
 
             slotID++;
         }
+
+        if(slots[selectedSlot].item != null){
+            BeginHoldItemServerRpc(slots[selectedSlot].item.itemHeldVisualID);            
+        }else{
+            BeginHoldItemServerRpc(-1);     
+        }
+    }
+
+    public void DropHeld(){
+        if(slots[selectedSlot].item != null){
+            SpawnItemGroundServerRpc(slots[selectedSlot].item.itemID);
+            slots[selectedSlot].item = null;
+        }
+        UpdateSlots();
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+    public void SpawnItemGroundServerRpc(int itemID){
+        GameObject temp = Instantiate(itemDatabase.items[itemID].groundItem, dropPos.position, dropPos.rotation);
+        temp.GetComponent<NetworkObject>().Spawn();
     }
 
     [ServerRpc(RequireOwnership = false)]
@@ -110,6 +132,12 @@ public class InventoryManager : NetworkBehaviour{
     }
 
     public void AddItem(ItemData item){
+        if(slots[selectedSlot].item == null){
+            slots[selectedSlot].item = item;
+            UpdateSlots();
+            return;
+        }
+
         foreach(var slot in slots){
             if(slot.item == null){
                 slot.item = item;

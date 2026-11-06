@@ -6,4 +6,8 @@ public class ItemData : ScriptableObject {
     public Texture2D itemIcon;
 
     public int itemHeldVisualID;
+    public GameObject groundItem;
+
+    [HideInInspector]
+    public int itemID; 
 }
