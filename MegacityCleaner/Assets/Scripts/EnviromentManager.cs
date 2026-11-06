@@ -20,5 +20,11 @@ public class EnviromentManager : MonoBehaviour{
                 }
             }
         }
+
+        if(selectedZone != null){
+            RenderSettings.fogColor = Color.Lerp(RenderSettings.fogColor, selectedZone.visualData.fogColor, transitionSpeed * Time.deltaTime);
+            RenderSettings.fogDensity = Mathf.Lerp(RenderSettings.fogDensity, selectedZone.visualData.fogDensity, transitionSpeed * Time.deltaTime);
+            RenderSettings.ambientLight = Color.Lerp(RenderSettings.ambientLight, selectedZone.visualData.lightColor, transitionSpeed * Time.deltaTime);
+        }
     }
 }

@@ -19,6 +19,12 @@ public class GameManager : NetworkBehaviour{
     public GameState gameState;
     public int currentDay = 1;
 
+    public EnviromentZone cityZone;
+
+    public EnviromentData dataDayStart;
+    public EnviromentData dataDayEnd;
+    public EnviromentData dataNight;
+
     void Update(){
         if(IsHost){
             if(Input.GetKeyDown("p")){
@@ -60,9 +66,31 @@ public class GameManager : NetworkBehaviour{
         gameState = state;
         currentDay = day;
         UpdateUI();
+        UpdateDayLighting();
     }
 
     public void UpdateUI(){
         PlayerBase.localPlayer.dayText.text = $"DAY {currentDay}";
+    }
+
+    public void UpdateDayLighting(){
+        switch(gameState){
+            case GameState.preDayStart:
+                cityZone.visualData = dataDayStart;
+                break;
+            case GameState.daySelling:
+                cityZone.visualData = dataDayStart;
+                break;
+            case GameState.dayDone:
+                cityZone.visualData = dataDayEnd;
+                break;
+            case GameState.scrapNight:
+                cityZone.visualData = dataNight;
+                break;
+            case GameState.preSleepNight:
+                cityZone.visualData = dataNight;
+                currentDay++;
+                break;
+        }
     }
 }

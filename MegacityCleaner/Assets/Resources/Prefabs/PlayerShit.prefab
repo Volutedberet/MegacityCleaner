@@ -93,6 +93,7 @@ GameObject:
   - component: {fileID: 2788169217257930619}
   - component: {fileID: 2766802594525203497}
   - component: {fileID: 3269661922668122198}
+  - component: {fileID: 1202132893219742913}
   m_Layer: 0
   m_Name: PlayerShit
   m_TagString: Untagged
@@ -189,6 +190,21 @@ MonoBehaviour:
   - visualFps: {fileID: 5128869308857988582}
     visualTps: {fileID: 7384255393875799062}
   dropPos: {fileID: 5006719346494612907}
+--- !u!114 &1202132893219742913
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1474252229017316319}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83e6e8e91f443b146a70dcc3338f4cfb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnviromentManager
+  player: {fileID: 1173848890690315585}
+  transitionSpeed: 0.5
+  cam: {fileID: 5819230364318382939}
 --- !u!1 &1692748921411076660
 GameObject:
   m_ObjectHideFlags: 0

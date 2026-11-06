@@ -504,6 +504,7 @@ MonoBehaviour:
     m_Center: {x: 0, y: 0, z: 0}
     m_Extent: {x: 100, y: 10, z: 100}
   visualData: {fileID: 11400000, guid: b9423c0435f33fb47b389ab1aa98694f, type: 2}
+  priority: 0
 --- !u!1 &95109909
 GameObject:
   m_ObjectHideFlags: 0
@@ -3658,6 +3659,10 @@ MonoBehaviour:
   ShowTopMostFoldoutHeaderGroup: 1
   gameState: 0
   currentDay: 0
+  cityZone: {fileID: 91466616}
+  dataDayStart: {fileID: 11400000, guid: b9423c0435f33fb47b389ab1aa98694f, type: 2}
+  dataDayEnd: {fileID: 11400000, guid: 3a09ae4ffd7cb1c4c8c819dd97ef71e2, type: 2}
+  dataNight: {fileID: 11400000, guid: 2d7298275c6a4b84fb38c0520ffbc2fb, type: 2}
 --- !u!1 &839444545
 GameObject:
   m_ObjectHideFlags: 0
