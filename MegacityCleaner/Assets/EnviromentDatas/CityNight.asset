@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b824524cce2fb54438c8c29e182871d1, type: 3}
   m_Name: CityNight
   m_EditorClassIdentifier: Assembly-CSharp::EnviromentData
-  lightColor: {r: 0.45113918, g: 0.4881035, b: 0.6981132, a: 1}
+  lightColor: {r: 0.759434, g: 0.79380053, b: 1, a: 1}
   fogColor: {r: 0, g: 0.0040219114, b: 0.01886791, a: 1}
-  fogDensity: 0.013
+  fogDensity: 0.04

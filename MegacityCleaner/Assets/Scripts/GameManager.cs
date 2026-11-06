@@ -25,6 +25,16 @@ public class GameManager : NetworkBehaviour{
     public EnviromentData dataDayEnd;
     public EnviromentData dataNight;
 
+    public static GameManager instance;
+    
+    void Awake(){
+        if(instance == null){
+            instance = this;
+            return;
+        }
+        Destroy(this);
+    }
+
     void Update(){
         if(IsHost){
             if(Input.GetKeyDown("p")){
@@ -89,7 +99,6 @@ public class GameManager : NetworkBehaviour{
                 break;
             case GameState.preSleepNight:
                 cityZone.visualData = dataNight;
-                currentDay++;
                 break;
         }
     }
