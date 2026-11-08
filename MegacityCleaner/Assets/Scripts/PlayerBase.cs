@@ -15,6 +15,8 @@ public class PlayerBase : NetworkBehaviour{
     public GameObject uiRenderers;
     public GameObject fog;
 
+    public GameObject flashlight;
+
     public InventoryManager inventory;
 
     public TextMeshProUGUI dayText;
@@ -38,5 +40,15 @@ public class PlayerBase : NetworkBehaviour{
             localPlayer = this;
             return;
         }
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+    public void ToggleFlashlightServerRpc(bool state){
+        ToggleFlashlightClientRpc(state);
+    }
+
+    [ClientRpc]
+    public void ToggleFlashlightClientRpc(bool state){
+        flashlight.SetActive(state);
     }
 }

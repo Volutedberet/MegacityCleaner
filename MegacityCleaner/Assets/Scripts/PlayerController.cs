@@ -11,15 +11,27 @@ public class PlayerController : NetworkBehaviour{
     public bool canMove;
 
     [Space(10)]
-    [SerializeField] float movementSpeed;
     [SerializeField] float sensitivity;
     [SerializeField] Transform mainCamera;
-    [SerializeField] CharacterController cc;
+    [SerializeField] Rigidbody rigidBody;
 
     [Space(10)]
     [SerializeField] float headSideTiltMax;
     [SerializeField] float headSideTiltSpeed;
     
+    [Space(10)]
+    [SerializeField] float moveForce;
+    [SerializeField] float maxMoveSpeed;
+    [SerializeField] float groundSlowdown;
+    [SerializeField] float airSlowdown;
+    [SerializeField] float jumpForce;
+    
+    [SerializeField] Transform checkSphere;
+    [SerializeField] float checkSphereRadius;
+    [SerializeField] LayerMask groundMask;
+
+    [SerializeField] float gravity;
+
     private float pitch;
     private float yaw;
     private float headTiltCurrent = 0.5f;
@@ -68,22 +80,34 @@ public class PlayerController : NetworkBehaviour{
             }
 
             transform.localRotation = Quaternion.Euler(0, yaw, 0);
-            mainCamera.localRotation = Quaternion.Euler(pitch, 0, Mathf.Lerp(-headSideTiltMax, headSideTiltMax, headTiltCurrent));
-
-            Vector2 input = new Vector2(Input.GetAxis("Vertical"), Input.GetAxis("Horizontal"));
-            input.Normalize();
-            Vector3 movementDir = (this.transform.forward * input.x) + (this.transform.right * input.y);
-            //movementDir = movementDir.normalized;
-
-            cc.Move((movementDir * movementSpeed * Time.deltaTime) + -Vector3.up * 9.7f * Time.deltaTime);            
+            mainCamera.localRotation = Quaternion.Euler(pitch, 0, Mathf.Lerp(-headSideTiltMax, headSideTiltMax, headTiltCurrent));      
         }
     }
 
-    public void UpdatePos(Transform pos){
-        cc.enabled = false;
-        this.transform.position = pos.position;
-        yaw = pos.rotation.y;
-        pitch = 0;
-        cc.enabled = true;
+    private void FixedUpdate() {
+        if(!IsOwner){
+            return;
+        }
+
+        if(!canMove){
+            return;
+        }        
+        
+        if(Input.GetAxisRaw("Horizontal") == 0 && Input.GetAxisRaw("Vertical") == 0){
+            if(Physics.CheckSphere(checkSphere.position, checkSphereRadius, groundMask)){
+                Vector3 velM = new Vector3(rigidBody.linearVelocity.x, 0, rigidBody.linearVelocity.z);
+                rigidBody.AddForce(-velM * groundSlowdown, ForceMode.Acceleration);
+            }
+        }else{
+            Vector2 movement = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+            movement = movement.normalized;
+            rigidBody.AddRelativeForce(new Vector3(movement.x, 0, movement.y) * moveForce);            
+        }
+
+
+        Vector3 vel = new Vector3(rigidBody.linearVelocity.x, 0, rigidBody.linearVelocity.z);
+        rigidBody.AddForce(-vel * (moveForce / maxMoveSpeed), ForceMode.Acceleration);
+
+        rigidBody.AddForce(Physics.gravity.y * Vector3.up * -gravity, ForceMode.Acceleration);
     }
 }
