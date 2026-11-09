@@ -10,6 +10,8 @@ using Unity.Netcode;
 public class PlayerBase : NetworkBehaviour{
     public static PlayerBase localPlayer;
     
+    public PlayerController controller;
+
     public GameObject playerTpsVisuals;
     public GameObject fpsCamera;
     public GameObject uiRenderers;

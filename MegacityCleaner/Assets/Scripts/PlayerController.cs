@@ -18,6 +18,11 @@ public class PlayerController : NetworkBehaviour{
     [Space(10)]
     [SerializeField] float headSideTiltMax;
     [SerializeField] float headSideTiltSpeed;
+
+    [Space(10)]
+    [SerializeField] Collider col;
+    [SerializeField] PhysicsMaterial matMove;
+    [SerializeField] PhysicsMaterial matStatic;
     
     [Space(10)]
     [SerializeField] float moveForce;
@@ -81,6 +86,12 @@ public class PlayerController : NetworkBehaviour{
 
             transform.localRotation = Quaternion.Euler(0, yaw, 0);
             mainCamera.localRotation = Quaternion.Euler(pitch, 0, Mathf.Lerp(-headSideTiltMax, headSideTiltMax, headTiltCurrent));      
+
+            if(Mathf.Abs(Input.GetAxisRaw("Horizontal")) + Mathf.Abs(Input.GetAxisRaw("Vertical")) == 0){
+                col.material = matStatic;
+            }else{
+                col.material = matMove;
+            }
         }
     }
 
@@ -93,7 +104,7 @@ public class PlayerController : NetworkBehaviour{
             return;
         }        
         
-        if(Input.GetAxisRaw("Horizontal") == 0 && Input.GetAxisRaw("Vertical") == 0){
+        if(Mathf.Abs(Input.GetAxisRaw("Horizontal")) + Mathf.Abs(Input.GetAxisRaw("Vertical")) == 0){
             if(Physics.CheckSphere(checkSphere.position, checkSphereRadius, groundMask)){
                 Vector3 velM = new Vector3(rigidBody.linearVelocity.x, 0, rigidBody.linearVelocity.z);
                 rigidBody.AddForce(-velM * groundSlowdown, ForceMode.Acceleration);
@@ -104,10 +115,21 @@ public class PlayerController : NetworkBehaviour{
             rigidBody.AddRelativeForce(new Vector3(movement.x, 0, movement.y) * moveForce);            
         }
 
-
         Vector3 vel = new Vector3(rigidBody.linearVelocity.x, 0, rigidBody.linearVelocity.z);
         rigidBody.AddForce(-vel * (moveForce / maxMoveSpeed), ForceMode.Acceleration);
 
         rigidBody.AddForce(Physics.gravity.y * Vector3.up * -gravity, ForceMode.Acceleration);
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+    public void LaunchMeServerRpc(Vector3 dir){
+        LaunchMeClientRpc(dir);
+    }
+
+    [ClientRpc]
+    public void LaunchMeClientRpc(Vector3 dir){
+        if(IsOwner){
+            rigidBody.AddForce(dir);
+        }
     }
 }
