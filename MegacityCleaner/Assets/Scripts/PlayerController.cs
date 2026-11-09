@@ -41,6 +41,14 @@ public class PlayerController : NetworkBehaviour{
     private float yaw;
     private float headTiltCurrent = 0.5f;
 
+    [Space(10)]
+    [SerializeField] Image staminaBar;
+    [SerializeField] float staminaRecovery;
+    [SerializeField] float staminaLoss;
+    float stamina = 1;
+    
+    bool isSprinting;
+
     private void Start() {
         if(!IsOwner){
             return;
@@ -84,14 +92,26 @@ public class PlayerController : NetworkBehaviour{
                 }
             }
 
+            isSprinting = Input.GetKey(KeyCode.LeftShift);
+
             transform.localRotation = Quaternion.Euler(0, yaw, 0);
             mainCamera.localRotation = Quaternion.Euler(pitch, 0, Mathf.Lerp(-headSideTiltMax, headSideTiltMax, headTiltCurrent));      
 
             if(Mathf.Abs(Input.GetAxisRaw("Horizontal")) + Mathf.Abs(Input.GetAxisRaw("Vertical")) == 0){
                 col.material = matStatic;
+                stamina += staminaRecovery * Time.deltaTime;
             }else{
-                col.material = matMove;
+                col.material = matMove;                
+                
+                if(isSprinting){
+                    stamina -= staminaLoss * Time.deltaTime;
+                }else{
+                    stamina += staminaRecovery * Time.deltaTime;
+                }
             }
+
+            staminaBar.fillAmount = stamina;
+            stamina = Mathf.Clamp(stamina, 0, 1);
         }
     }
 
@@ -103,6 +123,14 @@ public class PlayerController : NetworkBehaviour{
         if(!canMove){
             return;
         }        
+
+        float mult = 1;
+
+        if(isSprinting){
+            if(stamina > 0){
+                mult = 2;            
+            }
+        }
         
         if(Mathf.Abs(Input.GetAxisRaw("Horizontal")) + Mathf.Abs(Input.GetAxisRaw("Vertical")) == 0){
             if(Physics.CheckSphere(checkSphere.position, checkSphereRadius, groundMask)){
@@ -116,7 +144,7 @@ public class PlayerController : NetworkBehaviour{
         }
 
         Vector3 vel = new Vector3(rigidBody.linearVelocity.x, 0, rigidBody.linearVelocity.z);
-        rigidBody.AddForce(-vel * (moveForce / maxMoveSpeed), ForceMode.Acceleration);
+        rigidBody.AddForce(-vel * (moveForce / (maxMoveSpeed * mult)), ForceMode.Acceleration);
 
         rigidBody.AddForce(Physics.gravity.y * Vector3.up * -gravity, ForceMode.Acceleration);
     }
