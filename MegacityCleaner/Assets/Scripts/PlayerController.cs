@@ -42,12 +42,14 @@ public class PlayerController : NetworkBehaviour{
     private float headTiltCurrent = 0.5f;
 
     [Space(10)]
+    [SerializeField] GameObject staminaMeter;
     [SerializeField] Image staminaBar;
     [SerializeField] float staminaRecovery;
     [SerializeField] float staminaLoss;
     float stamina = 1;
     
     bool isSprinting;
+    Vector3 groundNormal;
 
     private void Start() {
         if(!IsOwner){
@@ -112,41 +114,62 @@ public class PlayerController : NetworkBehaviour{
 
             staminaBar.fillAmount = stamina;
             stamina = Mathf.Clamp(stamina, 0, 1);
+            staminaMeter.SetActive(stamina != 1);
         }
     }
 
-    private void FixedUpdate() {
-        if(!IsOwner){
+    private void FixedUpdate(){
+        if(!IsOwner || !canMove){
             return;
+        } 
+
+        bool isGrounded = IsGrounded();
+
+        float mult = 1f;
+        if(isSprinting && stamina > 0) mult = 2f;
+
+        Vector2 input = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+        bool hasMovementInput = input.sqrMagnitude > 0.001f;
+        if(input.sqrMagnitude > 1f) input.Normalize();
+
+        Vector3 moveDirection = transform.TransformDirection(new Vector3(input.x, 0f, input.y));
+        if(isGrounded){
+            moveDirection = Vector3.ProjectOnPlane(moveDirection, groundNormal);
+            if(moveDirection.sqrMagnitude > 0.001f) moveDirection.Normalize();
         }
 
-        if(!canMove){
-            return;
-        }        
+        if(hasMovementInput) rigidBody.AddForce(moveDirection * moveForce, ForceMode.Acceleration);
 
-        float mult = 1;
+        Vector3 planarVelocity = isGrounded ? Vector3.ProjectOnPlane(rigidBody.linearVelocity, groundNormal) : new Vector3(rigidBody.linearVelocity.x, 0f, rigidBody.linearVelocity.z);
+        float currentMaxSpeed = maxMoveSpeed * mult;
 
-        if(isSprinting){
-            if(stamina > 0){
-                mult = 2;            
+        if(planarVelocity.magnitude > currentMaxSpeed){
+            Vector3 limitedVelocity = planarVelocity.normalized * currentMaxSpeed;
+            Vector3 perpendicularVelocity = Vector3.Project(rigidBody.linearVelocity, groundNormal);
+            rigidBody.linearVelocity = limitedVelocity + perpendicularVelocity;
+        }
+
+        if(!hasMovementInput){
+            if(isGrounded){
+                Vector3 stoppingVelocity = Vector3.ProjectOnPlane(rigidBody.linearVelocity, groundNormal);
+                rigidBody.AddForce(-stoppingVelocity * groundSlowdown, ForceMode.Acceleration);
+            }else{
+                Vector3 airVelocity = new Vector3(rigidBody.linearVelocity.x, 0f, rigidBody.linearVelocity.z);
+                rigidBody.AddForce(-airVelocity * airSlowdown, ForceMode.Acceleration);
             }
         }
-        
-        if(Mathf.Abs(Input.GetAxisRaw("Horizontal")) + Mathf.Abs(Input.GetAxisRaw("Vertical")) == 0){
-            if(Physics.CheckSphere(checkSphere.position, checkSphereRadius, groundMask)){
-                Vector3 velM = new Vector3(rigidBody.linearVelocity.x, 0, rigidBody.linearVelocity.z);
-                rigidBody.AddForce(-velM * groundSlowdown, ForceMode.Acceleration);
-            }
+
+        rigidBody.AddForce(Physics.gravity * -gravity, ForceMode.Acceleration);
+    }
+
+    private bool IsGrounded(){
+        if (Physics.Raycast(checkSphere.position, Vector3.down, out RaycastHit hit, checkSphereRadius + 0.1f, groundMask, QueryTriggerInteraction.Ignore)){
+            groundNormal = hit.normal;
+            return true;
         }else{
-            Vector2 movement = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
-            movement = movement.normalized;
-            rigidBody.AddRelativeForce(new Vector3(movement.x, 0, movement.y) * moveForce);            
+            groundNormal = Vector3.up;
+            return true;
         }
-
-        Vector3 vel = new Vector3(rigidBody.linearVelocity.x, 0, rigidBody.linearVelocity.z);
-        rigidBody.AddForce(-vel * (moveForce / (maxMoveSpeed * mult)), ForceMode.Acceleration);
-
-        rigidBody.AddForce(Physics.gravity.y * Vector3.up * -gravity, ForceMode.Acceleration);
     }
 
     [ServerRpc(RequireOwnership = false)]
