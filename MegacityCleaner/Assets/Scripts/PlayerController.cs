@@ -30,6 +30,7 @@ public class PlayerController : NetworkBehaviour{
     [SerializeField] float groundSlowdown;
     [SerializeField] float airSlowdown;
     [SerializeField] float jumpForce;
+    [SerializeField] float climbSpeed;
     
     [SerializeField] Transform checkSphere;
     [SerializeField] float checkSphereRadius;
@@ -50,6 +51,7 @@ public class PlayerController : NetworkBehaviour{
     
     bool isSprinting;
     Vector3 groundNormal;
+    bool isClimbing;
 
     private void Start() {
         if(!IsOwner){
@@ -115,11 +117,25 @@ public class PlayerController : NetworkBehaviour{
             staminaBar.fillAmount = stamina;
             stamina = Mathf.Clamp(stamina, 0, 1);
             staminaMeter.SetActive(stamina != 1);
+
+            if(Physics.Raycast(this.transform.position - new Vector3(0, 0.74f, 0), this.transform.forward, out RaycastHit hit, 0.7f)){
+                if(hit.collider.gameObject.TryGetComponent<Ladder>(out Ladder ladder)){
+                    isClimbing = true;
+                    rigidBody.useGravity = false;
+                    rigidBody.linearVelocity = new Vector3(0, Input.GetAxis("Vertical") * climbSpeed, 0);
+                }else{
+                    rigidBody.useGravity = true;
+                    isClimbing = false;
+                }
+            }else{
+                rigidBody.useGravity = true;
+                isClimbing = false;
+            }
         }
     }
 
     private void FixedUpdate(){
-        if(!IsOwner || !canMove){
+        if(!IsOwner || !canMove || isClimbing){
             return;
         } 
 
@@ -129,8 +145,7 @@ public class PlayerController : NetworkBehaviour{
         if(isSprinting && stamina > 0) mult = 2f;
 
         Vector2 input = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
-        bool hasMovementInput = input.sqrMagnitude > 0.001f;
-        if(input.sqrMagnitude > 1f) input.Normalize();
+        input.Normalize();
 
         Vector3 moveDirection = transform.TransformDirection(new Vector3(input.x, 0f, input.y));
         if(isGrounded){
@@ -138,7 +153,7 @@ public class PlayerController : NetworkBehaviour{
             if(moveDirection.sqrMagnitude > 0.001f) moveDirection.Normalize();
         }
 
-        if(hasMovementInput) rigidBody.AddForce(moveDirection * moveForce, ForceMode.Acceleration);
+        rigidBody.AddForce(moveDirection * moveForce, ForceMode.Acceleration);
 
         Vector3 planarVelocity = isGrounded ? Vector3.ProjectOnPlane(rigidBody.linearVelocity, groundNormal) : new Vector3(rigidBody.linearVelocity.x, 0f, rigidBody.linearVelocity.z);
         float currentMaxSpeed = maxMoveSpeed * mult;
@@ -149,7 +164,7 @@ public class PlayerController : NetworkBehaviour{
             rigidBody.linearVelocity = limitedVelocity + perpendicularVelocity;
         }
 
-        if(!hasMovementInput){
+        if(input == Vector2.zero){
             if(isGrounded){
                 Vector3 stoppingVelocity = Vector3.ProjectOnPlane(rigidBody.linearVelocity, groundNormal);
                 rigidBody.AddForce(-stoppingVelocity * groundSlowdown, ForceMode.Acceleration);
