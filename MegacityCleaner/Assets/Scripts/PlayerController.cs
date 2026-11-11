@@ -43,6 +43,9 @@ public class PlayerController : NetworkBehaviour{
     private float headTiltCurrent = 0.5f;
 
     [Space(10)]
+    [SerializeField] Animator anim;
+
+    [Space(10)]
     [SerializeField] GameObject staminaMeter;
     [SerializeField] Image staminaBar;
     [SerializeField] float staminaRecovery;
@@ -127,9 +130,26 @@ public class PlayerController : NetworkBehaviour{
                     rigidBody.useGravity = true;
                     isClimbing = false;
                 }
+            }else if(Physics.Raycast(this.transform.position - new Vector3(0, 0.74f, 0), -this.transform.forward, out RaycastHit bHit, 0.5f)){
+                if(!Physics.Raycast(this.transform.position, -Vector3.up, out RaycastHit groundHit, 0.65f)){
+                    if(bHit.collider.gameObject.TryGetComponent<Ladder>(out Ladder ladder)){
+                        isClimbing = true;
+                        rigidBody.useGravity = false;
+                        rigidBody.linearVelocity = new Vector3(0, -Input.GetAxis("Vertical") * climbSpeed, 0);
+                    }else{
+                        rigidBody.useGravity = true;
+                        isClimbing = false;
+                    }                
+                }
             }else{
                 rigidBody.useGravity = true;
                 isClimbing = false;
+            }
+
+            if(isClimbing){
+
+            }else{
+                anim.SetBool("isMoving", Mathf.Abs(Input.GetAxisRaw("Horizontal")) + Mathf.Abs(Input.GetAxisRaw("Vertical")) != 0);
             }
         }
     }

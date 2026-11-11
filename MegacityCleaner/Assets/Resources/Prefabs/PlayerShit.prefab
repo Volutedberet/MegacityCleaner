@@ -124,7 +124,11 @@ MonoBehaviour:
   m_Animator: {fileID: 753910836350048934}
   TransitionStateInfoList: []
   AnimatorParameterEntries:
-    ParameterEntries: []
+    ParameterEntries:
+    - name: isMoving
+      NameHash: -27727268
+      Synchronize: 1
+      ParameterType: 4
   AnimatorParametersExpanded: 0
 --- !u!1 &579302158472331908
 GameObject:
@@ -1768,6 +1772,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 183
   gravity: -6
+  anim: {fileID: 753910836350048934}
   staminaMeter: {fileID: 2202958753055236163}
   staminaBar: {fileID: 8196990640526091724}
   staminaRecovery: 0.2
@@ -1899,7 +1904,7 @@ MonoBehaviour:
   recoveryRate: 0
   oxygenBar: {fileID: 9107016789803220223}
   visorUIHud: {fileID: 25033844631608583}
-  visorWorldModel: {fileID: 0}
+  visorWorldModel: {fileID: 4402792452070261767}
   oxyBarUI: {fileID: 1688466030689087700}
 --- !u!1 &3908840613882800504
 GameObject:
@@ -11443,6 +11448,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlayerBase
       objectReference: {fileID: 0}
+    - target: {fileID: 6666603822528672967, guid: 4f312bb79b28d9a44831153f66d4ed39, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -11555,6 +11564,11 @@ Transform:
 --- !u!4 &4365375953567070308 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -2519276909773469532, guid: 4f312bb79b28d9a44831153f66d4ed39, type: 3}
+  m_PrefabInstance: {fileID: 7033871318676041920}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &4402792452070261767 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6666603822528672967, guid: 4f312bb79b28d9a44831153f66d4ed39, type: 3}
   m_PrefabInstance: {fileID: 7033871318676041920}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &4431054999663776161 stripped

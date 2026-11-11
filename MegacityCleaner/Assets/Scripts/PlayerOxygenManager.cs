@@ -27,6 +27,7 @@ public class PlayerOxygenManager : NetworkBehaviour{
 
             visorUIHud.SetActive(isHelmetOn);
             oxyBarUI.SetActive(isHelmetOn);
+            SetHelmetServerRpc(isHelmetOn);
         }
 
         OxygenArea area = TryGetOxygen();
@@ -42,6 +43,16 @@ public class PlayerOxygenManager : NetworkBehaviour{
         }
         
         oxygenBar.fillAmount = oxygenCurrent/oxygenCap;      
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+    public void SetHelmetServerRpc(bool isOn){
+        SetHelmetClientRpc(isOn);
+    }
+
+    [ClientRpc]
+    public void SetHelmetClientRpc(bool isOn){
+        visorWorldModel.SetActive(isOn);
     }
 
     OxygenArea TryGetOxygen(){
