@@ -26,6 +26,15 @@ public class GameManager : NetworkBehaviour{
     public EnviromentData dataNight;
 
     public static GameManager instance;
+
+    [Space(10)]
+    public GameObject shopperNpc;
+    public float npcSpawnTime;
+    [SerializeField] Transform npcSpawnPos;
+    public List<Transform> npcPath = new List<Transform>();
+    public float npcWanderRange;
+
+    float spawnT;
     
     void Awake(){
         if(instance == null){
@@ -39,6 +48,17 @@ public class GameManager : NetworkBehaviour{
         if(IsHost){
             if(Input.GetKeyDown("p")){
                 ProgressState();
+            }
+
+            switch(gameState){
+                case GameState.daySelling:
+                    spawnT += Time.deltaTime;
+                    if(spawnT > npcSpawnTime){
+                        spawnT = 0;
+                        GameObject temp = Instantiate(shopperNpc, npcSpawnPos.position, npcSpawnPos.rotation);
+                        temp.GetComponent<NetworkObject>().Spawn();
+                    }
+                    break;
             }
         }
     }
@@ -117,6 +137,18 @@ public class GameManager : NetworkBehaviour{
             case GameState.preSleepNight:
                 cityZone.visualData = dataNight;
                 break;
+        }
+    }
+
+    private void OnDrawGizmos(){
+        Vector3 prev = npcSpawnPos.position;
+        foreach(var path in npcPath){
+            if(prev != Vector3.zero){
+                Gizmos.DrawLine(path.transform.position, prev);
+            }
+            prev = path.position;
+
+            Gizmos.DrawWireSphere(path.transform.position, npcWanderRange);
         }
     }
 }

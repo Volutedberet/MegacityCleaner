@@ -74,7 +74,7 @@ MonoBehaviour:
     dimension: 1
   dirtIntensity:
     m_OverrideState: 1
-    m_Value: 21.81
+    m_Value: 10
 --- !u!114 &-7284690984671175706
 MonoBehaviour:
   m_ObjectHideFlags: 3
