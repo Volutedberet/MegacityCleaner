@@ -14,6 +14,7 @@ public class InventoryManager : NetworkBehaviour{
 
     [Space(10)]
     [SerializeField] Transform dropPos;
+    [SerializeField] Animator anim;
 
     int selectedSlot = 0;
 
@@ -93,9 +94,9 @@ public class InventoryManager : NetworkBehaviour{
         }
 
         if(slots[selectedSlot].item != null){
-            BeginHoldItemServerRpc(slots[selectedSlot].item.itemHeldVisualID);            
+            BeginHoldItemServerRpc(slots[selectedSlot].item.itemHeldVisualID, slots[selectedSlot].item.holdStyle);            
         }else{
-            BeginHoldItemServerRpc(-1);     
+            BeginHoldItemServerRpc(-1, HoldStyle.hovering);     
         }
     }
 
@@ -114,20 +115,42 @@ public class InventoryManager : NetworkBehaviour{
     }
 
     [ServerRpc(RequireOwnership = false)]
-    public void BeginHoldItemServerRpc(int id){
-        BeginHoldItemClientRpc(id);
+    public void BeginHoldItemServerRpc(int id, HoldStyle holdStyle){
+        BeginHoldItemClientRpc(id, holdStyle);
     }
 
     [ClientRpc]
-    public void BeginHoldItemClientRpc(int id){
+    public void BeginHoldItemClientRpc(int id, HoldStyle holdStyle){
         if(id == -1){
             foreach(var held in heldItemDatas){
                 held.visualFps.SetActive(false);
                 held.visualTps.SetActive(false);
             }
+            
+            anim.Play("Hands.Idle");
         }else{
+            foreach(var held in heldItemDatas){
+                held.visualFps.SetActive(false);
+                held.visualTps.SetActive(false);
+            }
+
             heldItemDatas[id].visualFps.SetActive(true);
-            heldItemDatas[id].visualTps.SetActive(true);             
+            heldItemDatas[id].visualTps.SetActive(true);      
+
+            switch(holdStyle){
+                case HoldStyle.hovering:
+                    anim.Play("Hands.Idle");
+                    break;
+                case HoldStyle.oneHanded:
+                    anim.Play("Hands.HandHoldOneHanded");
+                    break;
+                case HoldStyle.oneHandedLeft:
+                    anim.Play("Hands.HandHoldOneHanded");
+                    break;
+                case HoldStyle.twoHanded:
+                    anim.Play("Hands.HandHoldTwoHanded");
+                    break;
+            }
         }
     }
 
