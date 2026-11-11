@@ -328,7 +328,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
-  GlobalObjectIdHash: 2322021227
+  GlobalObjectIdHash: 944328349
   InScenePlacedSourceGlobalObjectIdHash: 0
   m_InScenePlacedDisabledByDefault: 0
   DeferredDespawnTick: 0
@@ -1819,6 +1819,7 @@ MonoBehaviour:
   oxygenCap: 1200
   oxygenCurrent: 1200
   drainRate: 1
+  recoveryRate: 0
   oxygenBar: {fileID: 9107016789803220223}
   visorUIHud: {fileID: 25033844631608583}
   visorWorldModel: {fileID: 0}
@@ -2814,7 +2815,7 @@ Light:
   m_Type: 0
   m_Color: {r: 0.9339623, g: 0.70573115, b: 0.2775454, a: 1}
   m_Intensity: 300
-  m_Range: 10
+  m_Range: 100
   m_SpotAngle: 99.44445
   m_InnerSpotAngle: 58.701073
   m_CookieSize2D: {x: 0.5, y: 0.5}
@@ -11339,6 +11340,26 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 4f312bb79b28d9a44831153f66d4ed39, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -4747917413154575537, guid: 4f312bb79b28d9a44831153f66d4ed39, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 20d134fc522da3e4da40cb7c791ae1ca, type: 2}
+    - target: {fileID: -4747917413154575537, guid: 4f312bb79b28d9a44831153f66d4ed39, type: 3}
+      propertyPath: 'm_Materials.Array.data[2]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 3cc7d805ea36c154897b6585b37226b2, type: 2}
+    - target: {fileID: -4345101707792037284, guid: 4f312bb79b28d9a44831153f66d4ed39, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 20d134fc522da3e4da40cb7c791ae1ca, type: 2}
+    - target: {fileID: -1990968323811559735, guid: 4f312bb79b28d9a44831153f66d4ed39, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 3cc7d805ea36c154897b6585b37226b2, type: 2}
+    - target: {fileID: 117214286460000749, guid: 4f312bb79b28d9a44831153f66d4ed39, type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 4f312bb79b28d9a44831153f66d4ed39, type: 3}
