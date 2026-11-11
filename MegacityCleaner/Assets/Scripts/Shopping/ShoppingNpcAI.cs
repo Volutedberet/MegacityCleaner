@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.Networking;
 using Unity.Netcode;
 using UnityEngine.AI;
+using TMPro;
 
 public enum ShopNpcState{
     commute,
@@ -14,6 +15,10 @@ public enum ShopNpcState{
 public class ShoppingNpcAI : NetworkBehaviour{
     public ShopNpcState state;
     public Vector2 idleTimeRange;
+    public float interestInBuying;
+
+    [SerializeField] TextMeshProUGUI debugState;
+    [SerializeField] TextMeshProUGUI debugInterest;
 
     NavMeshAgent agent;
     int pathProgress;
@@ -33,8 +38,13 @@ public class ShoppingNpcAI : NetworkBehaviour{
 
     void Update(){
         if(!IsOwner){
+            debugState.text = "STATE HANDLED BY HOST";
+            debugInterest.text = $"Interest in Buying: {interestInBuying.ToString("F1")}";
             return;
         }
+
+        debugState.text = $"State: {state.ToString()}";
+        debugInterest.text = $"Interest in Buying: {interestInBuying.ToString("F1")}";
 
         switch(state){
             case ShopNpcState.commute:
