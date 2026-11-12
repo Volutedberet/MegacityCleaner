@@ -3,6 +3,8 @@ using UnityEngine.Networking;
 using Unity.Netcode;
 using UnityEngine.AI;
 using TMPro;
+using System.Collections;
+using System.Collections.Generic;
 
 public enum ShopNpcState{
     commute,
@@ -19,6 +21,8 @@ public class ShoppingNpcAI : NetworkBehaviour{
 
     [SerializeField] TextMeshProUGUI debugState;
     [SerializeField] TextMeshProUGUI debugInterest;
+
+    List<InterestMaker> interests = new List<InterestMaker>();
 
     NavMeshAgent agent;
     int pathProgress;
@@ -68,6 +72,21 @@ public class ShoppingNpcAI : NetworkBehaviour{
                     targetPos = GameManager.instance.npcPath[pathProgress].position + new Vector3(Random.Range(-GameManager.instance.npcWanderRange, GameManager.instance.npcWanderRange), 0, Random.Range(-GameManager.instance.npcWanderRange, GameManager.instance.npcWanderRange));
                 }
                 break;
+        }
+    }
+
+    public void TryAddInterest(InterestMaker maker){
+        foreach(var interest in interests){
+            if(maker == interest){
+                return;
+            }
+        }
+
+        interests.Add(maker);
+        interestInBuying += maker.interestGatheredOnSeen;
+
+        if(Random.Range(0, 100) < interestInBuying){
+            state = ShopNpcState.interested;
         }
     }
 }
