@@ -45,8 +45,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 648f3c2a1598ce7418d41abff238d340, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RoomOpening
+  didGen: 0
   wallNoConnect: {fileID: 3205488903918326030}
-  roomPotentials: []
 --- !u!1 &2958868069236837161
 GameObject:
   m_ObjectHideFlags: 0
@@ -92,8 +92,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 648f3c2a1598ce7418d41abff238d340, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RoomOpening
+  didGen: 0
   wallNoConnect: {fileID: 6484681104742214275}
-  roomPotentials: []
 --- !u!1 &2977750520864174062
 GameObject:
   m_ObjectHideFlags: 0
@@ -139,8 +139,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 648f3c2a1598ce7418d41abff238d340, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RoomOpening
+  didGen: 0
   wallNoConnect: {fileID: 3363763048671760056}
-  roomPotentials: []
 --- !u!1 &3205488903918326030
 GameObject:
   m_ObjectHideFlags: 0
@@ -159,7 +159,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &3908467837372388178
 Transform:
   m_ObjectHideFlags: 0
@@ -249,7 +249,7 @@ BoxCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
@@ -271,7 +271,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2281743246019436440
 Transform:
   m_ObjectHideFlags: 0
@@ -361,7 +361,7 @@ BoxCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
@@ -374,6 +374,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 752578127476268504}
+  - component: {fileID: 8375325518514568925}
   m_Layer: 0
   m_Name: Room4Hallway
   m_TagString: Untagged
@@ -398,8 +399,25 @@ Transform:
   - {fileID: 8615769289790105709}
   - {fileID: 2321136830943706467}
   - {fileID: 4478427608593088543}
+  - {fileID: 6066412777832306847}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8375325518514568925
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4095177871708235645}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10143ae1df6098b4194212276716a432, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Room
+  roomCenter: {fileID: 6066412777832306847}
+  roomSize: {x: 10, y: 10.5, z: 10}
+  roomGeoBase:
+  - {fileID: 5642096722085710312}
 --- !u!1 &5642096722085710312
 GameObject:
   m_ObjectHideFlags: 0
@@ -412,9 +430,10 @@ GameObject:
   - component: {fileID: 4473218950294130956}
   - component: {fileID: 9171234607059900037}
   - component: {fileID: 3971884807767262318}
+  - component: {fileID: 5040697023580014408}
   m_Layer: 0
   m_Name: Mesh
-  m_TagString: Untagged
+  m_TagString: MapRoom
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5627,6 +5646,28 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5642096722085710312}
   m_Mesh: {fileID: 0}
+--- !u!64 &5040697023580014408
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5642096722085710312}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 0}
 --- !u!1 &6484681104742214275
 GameObject:
   m_ObjectHideFlags: 0
@@ -5645,7 +5686,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &958390507665515520
 Transform:
   m_ObjectHideFlags: 0
@@ -5735,7 +5776,38 @@ BoxCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!1 &8604550065896081950
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6066412777832306847}
+  m_Layer: 0
+  m_Name: Center
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6066412777832306847
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8604550065896081950}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 6.66}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 752578127476268504}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

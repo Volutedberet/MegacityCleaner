@@ -15,4 +15,7 @@ MonoBehaviour:
   mapName: Trashworld
   sceneID: 1
   enemyCountRange: {x: 0, y: 0}
-  enemiesOnMap: []
+  mapTiles:
+  - {fileID: 4095177871708235645, guid: d7b364161ced7464096520492b0a2e15, type: 3}
+  - {fileID: 5773690318072212685, guid: c148da52eb215aa45909a28d9885a1fc, type: 3}
+  mapRoomCredits: {x: 15, y: 20}

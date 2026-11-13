@@ -8,5 +8,6 @@ public class MapData : ScriptableObject {
     public int sceneID;
 
     public Vector2 enemyCountRange;
-    public List<GameObject> enemiesOnMap = new List<GameObject>();
+    public List<GameObject> mapTiles = new List<GameObject>();
+    public Vector2 mapRoomCredits;
 }

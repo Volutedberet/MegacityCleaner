@@ -12,9 +12,10 @@ GameObject:
   - component: {fileID: 8624361081879427576}
   - component: {fileID: 7312632146636698888}
   - component: {fileID: 707933597959672480}
+  - component: {fileID: 6833127743628281738}
   m_Layer: 0
-  m_Name: New Game Object
-  m_TagString: Untagged
+  m_Name: Mesh
+  m_TagString: MapRoom
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1768,6 +1769,28 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2928677607228336409}
   m_Mesh: {fileID: 0}
+--- !u!64 &6833127743628281738
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2928677607228336409}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 0}
 --- !u!1 &4307907162819550788
 GameObject:
   m_ObjectHideFlags: 0
@@ -1786,7 +1809,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &5734110702138353990
 Transform:
   m_ObjectHideFlags: 0
@@ -1876,10 +1899,41 @@ BoxCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!1 &5455021375261932698
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2934873520921123613}
+  m_Layer: 0
+  m_Name: Center
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2934873520921123613
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5455021375261932698}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 16.2}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6895018485474170119}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5773690318072212685
 GameObject:
   m_ObjectHideFlags: 0
@@ -1889,6 +1943,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6895018485474170119}
+  - component: {fileID: 7622801922979569667}
   m_Layer: 0
   m_Name: RoomLongHall
   m_TagString: Untagged
@@ -1911,8 +1966,25 @@ Transform:
   m_Children:
   - {fileID: 551087251485077425}
   - {fileID: 6996980924309073349}
+  - {fileID: 2934873520921123613}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7622801922979569667
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5773690318072212685}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10143ae1df6098b4194212276716a432, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Room
+  roomCenter: {fileID: 2934873520921123613}
+  roomSize: {x: 9.37, y: 10.34, z: 27.8}
+  roomGeoBase:
+  - {fileID: 2928677607228336409}
 --- !u!1 &9093216763540597516
 GameObject:
   m_ObjectHideFlags: 0
@@ -1958,5 +2030,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 648f3c2a1598ce7418d41abff238d340, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RoomOpening
+  didGen: 0
   wallNoConnect: {fileID: 4307907162819550788}
-  roomPotentials: []

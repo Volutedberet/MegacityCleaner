@@ -37,6 +37,17 @@ public class MapManager : NetworkBehaviour{
     [ServerRpc(RequireOwnership = false)]
     public void LoadMapServerRpc(int mapID){
         LoadMapClientRpc(mapID);
+        StartCoroutine(PostLoad());
+    }
+
+    IEnumerator PostLoad(){
+        yield return new WaitForSeconds(0.1f);
+        GenerateMap();
+        yield return new WaitForSeconds(0.1f);
+
+        foreach(var room in MapBase.instance.roomsGenerated){
+            SyncRoomClientRpc(room.id, room.pos, room.rot);
+        }
     }
 
     [ClientRpc]
@@ -44,5 +55,16 @@ public class MapManager : NetworkBehaviour{
         Debug.Log($"Requested Load of Map {mapID}");
         SceneManager.LoadScene(mapDatas[mapID].sceneID, LoadSceneMode.Additive);
         currentlyLoaded = mapID;
+    }
+
+    public void GenerateMap(){
+        MapBase.instance.GenerateMap();
+    }
+
+    [ClientRpc]
+    public void SyncRoomClientRpc(int roomID, Vector3 roomPosition, Quaternion roomRotation){
+        if(!IsHost){
+            MapBase.instance.SpawnRoom(new GeneratedRoom(roomID, roomPosition, roomRotation));        
+        }
     }
 }
