@@ -18,4 +18,5 @@ MonoBehaviour:
   mapTiles:
   - {fileID: 4095177871708235645, guid: d7b364161ced7464096520492b0a2e15, type: 3}
   - {fileID: 5773690318072212685, guid: c148da52eb215aa45909a28d9885a1fc, type: 3}
-  mapRoomCredits: {x: 15, y: 20}
+  - {fileID: 4095177871708235645, guid: 8f645cb0c521dc644b802fd456e71d9a, type: 3}
+  mapRoomCredits: {x: 25, y: 35}

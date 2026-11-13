@@ -18,7 +18,9 @@ public class Room : MonoBehaviour{
         return false;
     }
 
-    private void OnDrawGizmos() {
+    private void OnDrawGizmos(){
+        Gizmos.color = Color.green;
+
         Gizmos.matrix = this.transform.localToWorldMatrix;
         Gizmos.DrawWireCube(roomCenter.localPosition, roomSize);
     }

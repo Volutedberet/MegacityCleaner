@@ -9,6 +9,7 @@ public class MapBase : MonoBehaviour{
     public List<GeneratedRoom> roomsGenerated = new List<GeneratedRoom>();
 
     public static MapBase instance;
+    public bool isMapDone;
     
     void Awake(){
         if(instance == null){
@@ -18,7 +19,12 @@ public class MapBase : MonoBehaviour{
         Destroy(this);
     }
 
-    public void GenerateMap(){
+    [ContextMenu("ForceGen")]
+    public void ForceGenMap(){
+        StartCoroutine(GenerateMap());
+    }
+
+    public IEnumerator GenerateMap(){
         int credits = Mathf.RoundToInt(Random.Range(mapData.mapRoomCredits.x, mapData.mapRoomCredits.y));
 
         for(int i = 0; i < credits; i++){
@@ -38,7 +44,7 @@ public class MapBase : MonoBehaviour{
 
             bool didKeep = true;
 
-            Collider[] cols = Physics.OverlapBox(temp.roomCenter.position, temp.roomSize / 2, temp.roomCenter.rotation);
+            Collider[] cols = Physics.OverlapBox(temp.roomCenter.position, (temp.roomSize - new Vector3(0.2f, 0.2f, 0.2f)) / 2, temp.roomCenter.rotation);
             foreach(var col in cols){
                 if(col.gameObject.tag == "MapRoom"){
                     if(!temp.IsGeoMine(col.gameObject)){
@@ -52,7 +58,12 @@ public class MapBase : MonoBehaviour{
             if(didKeep){
                 roomsGenerated.Add(new GeneratedRoom(selectedRoom, temp.transform.position, temp.transform.rotation));
             }
+
+            yield return new WaitForSeconds(0.1f);
         }
+        
+        yield return new WaitForSeconds(0.1f);
+        isMapDone = true;
     }
 
     public void SpawnRoom(GeneratedRoom roomData){

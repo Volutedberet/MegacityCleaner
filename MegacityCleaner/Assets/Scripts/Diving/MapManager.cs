@@ -43,7 +43,12 @@ public class MapManager : NetworkBehaviour{
     IEnumerator PostLoad(){
         yield return new WaitForSeconds(0.1f);
         GenerateMap();
-        yield return new WaitForSeconds(0.1f);
+
+        while(!MapBase.instance.isMapDone){
+            yield return null;
+        }
+
+        yield return new WaitForSeconds(0.15f);
 
         foreach(var room in MapBase.instance.roomsGenerated){
             SyncRoomClientRpc(room.id, room.pos, room.rot);
@@ -58,7 +63,7 @@ public class MapManager : NetworkBehaviour{
     }
 
     public void GenerateMap(){
-        MapBase.instance.GenerateMap();
+        MapBase.instance.ForceGenMap();
     }
 
     [ClientRpc]
