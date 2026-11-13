@@ -11,6 +11,8 @@ public class ElevatorBase : NetworkBehaviour{
     public Interactable interact;
     public float speed;
 
+    public int selectedMap;
+
     bool isDown;
 
     void Update(){
@@ -50,6 +52,7 @@ public class ElevatorBase : NetworkBehaviour{
         if(GameManager.instance.gameState == GameState.scrapNight){
             if(AllPlayersIn()){
                 StartDescentServerRpc();
+                MapManager.instance.LoadMapServerRpc(selectedMap);
             }
         }
     }

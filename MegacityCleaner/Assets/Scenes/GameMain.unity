@@ -3166,7 +3166,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ElevatorBase
   ShowTopMostFoldoutHeaderGroup: 1
   interact: {fileID: 1053333747}
-  speed: 5
+  speed: 15
+  selectedMap: 0
 --- !u!114 &287364022
 MonoBehaviour:
   m_ObjectHideFlags: 0
