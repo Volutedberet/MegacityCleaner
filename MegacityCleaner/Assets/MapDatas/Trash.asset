@@ -16,7 +16,28 @@ MonoBehaviour:
   sceneID: 1
   enemyCountRange: {x: 0, y: 0}
   mapTiles:
-  - {fileID: 4095177871708235645, guid: d7b364161ced7464096520492b0a2e15, type: 3}
-  - {fileID: 5773690318072212685, guid: c148da52eb215aa45909a28d9885a1fc, type: 3}
-  - {fileID: 4095177871708235645, guid: 8f645cb0c521dc644b802fd456e71d9a, type: 3}
+  - tile: {fileID: 4095177871708235645, guid: 98c48aee3debd15479965e70633c59c7, type: 3}
+    chance: 100
+    additionalTokenCost: 0
+  - tile: {fileID: 4095177871708235645, guid: c586f55269127ea4dac273f145b0578a, type: 3}
+    chance: 10
+    additionalTokenCost: 0
+  - tile: {fileID: 4095177871708235645, guid: 8f645cb0c521dc644b802fd456e71d9a, type: 3}
+    chance: 35
+    additionalTokenCost: 0
+  - tile: {fileID: 4095177871708235645, guid: d7b364161ced7464096520492b0a2e15, type: 3}
+    chance: 100
+    additionalTokenCost: 0
+  - tile: {fileID: 4095177871708235645, guid: d7b364161ced7464096520492b0a2e15, type: 3}
+    chance: 100
+    additionalTokenCost: 0
+  - tile: {fileID: 4095177871708235645, guid: d7b364161ced7464096520492b0a2e15, type: 3}
+    chance: 100
+    additionalTokenCost: 0
+  - tile: {fileID: 5773690318072212685, guid: c148da52eb215aa45909a28d9885a1fc, type: 3}
+    chance: 45
+    additionalTokenCost: 0
+  - tile: {fileID: 5773690318072212685, guid: c148da52eb215aa45909a28d9885a1fc, type: 3}
+    chance: 45
+    additionalTokenCost: 0
   mapRoomCredits: {x: 25, y: 35}

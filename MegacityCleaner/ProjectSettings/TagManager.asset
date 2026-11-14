@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Ground
   - MapRoom
+  - Doormat
   layers:
   - Default
   - TransparentFX

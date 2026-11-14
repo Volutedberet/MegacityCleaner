@@ -53,6 +53,11 @@ public class MapManager : NetworkBehaviour{
         foreach(var room in MapBase.instance.roomsGenerated){
             SyncRoomClientRpc(room.id, room.pos, room.rot);
         }
+
+        yield return new WaitForSeconds(0.15f);
+        StartDoorCheckClientRpc();
+        yield return new WaitForSeconds(0.15f);
+        StartDoormatCleanClientRpc();
     }
 
     [ClientRpc]
@@ -71,5 +76,15 @@ public class MapManager : NetworkBehaviour{
         if(!IsHost){
             MapBase.instance.SpawnRoom(new GeneratedRoom(roomID, roomPosition, roomRotation));        
         }
+    }
+
+    [ClientRpc]
+    public void StartDoorCheckClientRpc(){
+        MapBase.instance.CheckDoors();
+    }
+
+    [ClientRpc]
+    public void StartDoormatCleanClientRpc(){
+        MapBase.instance.CleanDoormats();
     }
 }

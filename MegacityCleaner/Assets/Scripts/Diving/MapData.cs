@@ -8,6 +8,15 @@ public class MapData : ScriptableObject {
     public int sceneID;
 
     public Vector2 enemyCountRange;
-    public List<GameObject> mapTiles = new List<GameObject>();
+    public List<MapTile> mapTiles = new List<MapTile>();
     public Vector2 mapRoomCredits;
+}
+
+[System.Serializable]
+public class MapTile{
+    public GameObject tile;
+    
+    [Range(0, 100)]
+    public float chance;
+    public int additionalTokenCost;
 }

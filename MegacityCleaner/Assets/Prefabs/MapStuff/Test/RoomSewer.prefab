@@ -35,6 +35,7 @@ Transform:
   - {fileID: 2956110347501416631}
   - {fileID: 6066412777832306847}
   - {fileID: 6975779076922656540}
+  - {fileID: 7957586220589513193}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &8375325518514568925
@@ -50,7 +51,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Room
   roomCenter: {fileID: 6066412777832306847}
-  roomSize: {x: 30, y: 10.5, z: 35}
+  roomSize: {x: 30, y: 22.4, z: 35}
   roomGeoBase:
   - {fileID: 8501799301089401990}
 --- !u!1 &6964515092000964576
@@ -191,12 +192,74 @@ Transform:
   m_GameObject: {fileID: 8604550065896081950}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 10, y: 0, z: 17.4}
+  m_LocalPosition: {x: 10, y: -5.54, z: 17.4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 752578127476268504}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &1162967795492070561
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 752578127476268504}
+    m_Modifications:
+    - target: {fileID: 1580627995962516858, guid: 7d758425ca6e5484cbfa45008581fc00, type: 3}
+      propertyPath: m_Name
+      value: Doormat
+      objectReference: {fileID: 0}
+    - target: {fileID: 9100850767325158728, guid: 7d758425ca6e5484cbfa45008581fc00, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.028633924
+      objectReference: {fileID: 0}
+    - target: {fileID: 9100850767325158728, guid: 7d758425ca6e5484cbfa45008581fc00, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -5.0000033
+      objectReference: {fileID: 0}
+    - target: {fileID: 9100850767325158728, guid: 7d758425ca6e5484cbfa45008581fc00, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.46325758
+      objectReference: {fileID: 0}
+    - target: {fileID: 9100850767325158728, guid: 7d758425ca6e5484cbfa45008581fc00, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9100850767325158728, guid: 7d758425ca6e5484cbfa45008581fc00, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9100850767325158728, guid: 7d758425ca6e5484cbfa45008581fc00, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9100850767325158728, guid: 7d758425ca6e5484cbfa45008581fc00, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9100850767325158728, guid: 7d758425ca6e5484cbfa45008581fc00, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9100850767325158728, guid: 7d758425ca6e5484cbfa45008581fc00, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9100850767325158728, guid: 7d758425ca6e5484cbfa45008581fc00, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 7d758425ca6e5484cbfa45008581fc00, type: 3}
+--- !u!4 &7957586220589513193 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 9100850767325158728, guid: 7d758425ca6e5484cbfa45008581fc00, type: 3}
+  m_PrefabInstance: {fileID: 1162967795492070561}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2466645610131030910
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -319,6 +382,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: -90
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 5a93b228d0ef05d468a464fd8ae717a7, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 0d49d66197697ab4599e2487053d0cda, type: 2}
     - target: {fileID: 919132149155446097, guid: 5a93b228d0ef05d468a464fd8ae717a7, type: 3}
       propertyPath: m_Name
       value: SewerRoom
